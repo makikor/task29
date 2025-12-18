@@ -1,13 +1,11 @@
 export class RenderBoard {
   constructor(body) {
     this._body = body;
-    this.randomaizer;
   }
-  randomaizer;
 
   renderingBoard() {
     const board = document.createElement("div");
-    this._body.classList.add("board");
+    board.classList.add("board");
     this._body.append(board);
 
     for (let i = 0; i < 4; i++) {
@@ -21,9 +19,17 @@ export class RenderBoard {
       }
     }
     let labelScoreGame = document.createElement("div");
-    labelScoreGame.classList.add("scoreLabel");
-    labelScoreGame.innerText = `${0}`;
-    this._body.lastElementChild.append(labelScoreGame);
+    labelScoreGame.innerHTML = `
+      <div class="labelScoreGame__boxs">
+        <div class="labelScoreGame__boxs_hit">0</div>
+      </div>
+      <div class="labelScoreGame__boxs" >
+        <div class="labelScoreGame__boxs_miss">0</box>
+      </div>
+      `;
+
+    labelScoreGame.classList.add("labelScoreGame");
+    this._body.append(labelScoreGame);
   }
 
   goblinMove(Icon) {
@@ -33,19 +39,19 @@ export class RenderBoard {
     imageGoblin.classList.add("icon_goblin");
     imageGoblin.setAttribute("alt", "goblin");
 
-    const set = new Set();
-    while (set.size < boxs.length) {
-      set.add(Math.floor(Math.random() * (boxs.length - 0)));
+    function random(min, max) {
+      return Math.floor(Math.random() * (max - min));
     }
 
-    this.randomaizer = [...set];
-    let index = 0;
-    let stopSetInterval = setInterval(() => {
-      boxs[this.randomaizer[index]].append(imageGoblin);
-      index++;
-      if (index == this.randomaizer.length) {
-        clearInterval(stopSetInterval);
-      }
+    let previousIndex;
+
+    setInterval(() => {
+      let randomIndex;
+      do {
+        randomIndex = random(0, boxs.length);
+      } while (previousIndex !== undefined && randomIndex === previousIndex);
+      boxs[randomIndex].append(imageGoblin);
+      previousIndex = randomIndex;
     }, 1000);
   }
 }

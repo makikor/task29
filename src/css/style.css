@@ -2,6 +2,19 @@ body {
     color: #999;
 }
 
+.board{
+    margin: auto;
+    width: 800px;
+    height: 800px;
+}
+
+.row{
+    display: flex;
+    width: 800px;
+    height: 200px;
+    align-content: center;
+}
+
 .box{
     box-sizing: border-box;
     margin: 2px;
@@ -10,22 +23,8 @@ body {
     border-style: solid;
     border-color: rgb(213, 219, 211);
     border-radius: 10%;
-    
-}
-
-.row{
-    
-    display: flex;
-    width: 800px;
-    height: 200px;
-    align-content: center;
-
-}
-
-.board{
-    margin: auto;
-    width: 800px;
-    height: 800px;
+    cursor: url('../img/icons9.png'), pointer;
+    background-color: rgb(242, 247, 252);
 }
 
 .icon_goblin{
@@ -33,22 +32,31 @@ body {
     height: 100%;
 }
 
-.scoreLabel{
+.labelScoreGame{
+    display: flex;
     margin: auto;
     width: 400px;
-    height: 100px;
-    background-color: #b1c0b3;
     font-size: 5em;
     text-align: center;
-    color: aliceblue;
-    border-radius:7%;
-    border-style: solid;
-    border-width: 5px;
-    border-color: rgb(218, 223, 217);
+    color: rgb(211, 211, 211);
 }
 
-.custom { 
-    /* cursor: pointer; */
-    cursor: url('../img/icons9.png'), pointer;
+.labelScoreGame__boxs {
+    margin: 10%;
+    width: 30%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(221, 223, 223);
+    border-radius: 18px;
+    color: rgb(247, 247, 247);
+}
 
+.labelScoreGame__boxs_hit {
+    background-color: rgb(140, 226, 154);
+    border-radius: 10px;
+}
+
+.labelScoreGame__boxs_miss {
+    background-color: rgb(238, 107, 84);
+    border-radius: 10px;
 }

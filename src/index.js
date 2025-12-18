@@ -9,5 +9,4 @@ const GameGoblin = new Game(document.body);
 RenderCoblinBoard.renderingBoard();
 RenderCoblinBoard.goblinMove(Icon);
 
-GameGoblin.pointerHammer();
 GameGoblin.start();
