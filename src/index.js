@@ -4,9 +4,10 @@ import { Game } from "./js/goblin/game";
 import Icon from "./img/goblin.png";
 
 const RenderCoblinBoard = new RenderBoard(document.body);
-const GameGoblin = new Game(document.body);
+const GameGoblin = new Game();
 
 RenderCoblinBoard.renderingBoard();
 RenderCoblinBoard.goblinMove(Icon);
 
-GameGoblin.start();
+GameGoblin.startGame();
+GameGoblin.startMonitoring();
