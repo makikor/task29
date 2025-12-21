@@ -1,67 +1,59 @@
+import { RenderBoard } from "./renderBoard";
+
 export class Game {
-  constructor() {
-    this.board = document.querySelector(".board");
-    if (!this.board) {
-      return;
-    }
-    this.timeoutId = null;
-    this.startMonitoring();
+  constructor(i) {
+    this.renderer = new RenderBoard(document.body);
+    this.hit = 0;
+    this.miss = 0;
+    this.iconPath = i;
+    this.sumGoblin = 0;
   }
 
   startGame() {
-    let hit = 0;
-    let miss = 0;
+    this.renderer.renderingBoard();
+    this.renderer.goblinMove(this.iconPath);
 
-    document.querySelector(".board").addEventListener("click", (e) => {
-      let boxsHit = document.querySelector(".labelScoreGame__boxs_hit");
-      let boxsMiss = document.querySelector(".labelScoreGame__boxs_miss");
+    const board = document.querySelector(".board");
+    const boxsHit = document.querySelector(".labelScoreGame__boxs_hit");
+    const boxsMiss = document.querySelector(".labelScoreGame__boxs_miss");
 
-      checkClicks(e);
+    board.addEventListener("click", (e) => {
+      const x = "Вы выйграли!!!";
+      const y = "Вы проиграли (((";
 
-      function checkClicks(e) {
-        e.target.nodeName == "IMG" ? hitrender() : missrender();
-        function hitrender() {
-          document.querySelector("img").remove();
-          boxsHit.textContent = `${(hit += 1)}`;
-          if (boxsHit.textContent == 5) {
-            sbros("победили!!!");
-          }
+      const hitrender = () => {
+        const img = document.querySelector("img");
+        if (img) {
+          img.remove();
+          this.hit++;
+          boxsHit.textContent = this.hit;
         }
-        function missrender() {
-          boxsMiss.textContent = `${(miss += 1)}`;
-          if (boxsMiss.textContent == 5) {
-            sbros("проиграли (((");
-          }
-        }
+      };
 
-        function sbros(text) {
-          boxsHit.textContent = `${(hit = 0)}`;
-          boxsMiss.textContent = `${(miss = 0)}`;
-          setTimeout(function () {
-            alert(`Вы ${text} \nСыграем еще раз?`);
-          }, 300);
+      const missrender = () => {
+        this.miss++;
+        boxsMiss.textContent = this.miss;
+
+        if (this.miss === 5) {
+          this.renderer.finish();
         }
-      }
+      };
+
+      e.target.nodeName === "IMG" ? hitrender() : missrender();
     });
-  }
 
-  startMonitoring() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
+    const stop = setInterval(() => {
+      if (this.sumGoblin - (this.hit + this.miss) != 0) {
+        console.log("пропуск");
+        this.miss += 1;
+        boxsMiss.textContent = this.miss;
+      }
 
-    this.timeoutId = setTimeout(() => {
-      alert(`Вы пропустили 5 гоблинов подряд. \nСыграем еще раз?`);
-      document.querySelector(".labelScoreGame__boxs_hit").textContent = 0;
-      document.querySelector(".labelScoreGame__boxs_miss").textContent = 0;
-    }, 5000);
-
-    document
-      .querySelector(".board")
-      .addEventListener("click", this.handleClick.bind(this));
-  }
-
-  handleClick() {
-    this.startMonitoring();
+      if (this.miss === 5) {
+        this.renderer.finish();
+        clearInterval(stop);
+      }
+      this.sumGoblin++;
+    }, 1000);
   }
 }

@@ -1,5 +1,6 @@
 body {
     color: #999;
+    position: relative;
 }
 
 .board{
@@ -59,4 +60,27 @@ body {
 .labelScoreGame__boxs_miss {
     background-color: rgb(238, 107, 84);
     border-radius: 10px;
+}
+
+    
+.modal-overlay {
+    display: none; /* Скрыто по умолчанию*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 5, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.modal-window {
+    background-color: #eeeaea;
+    border-radius: 5px;
+    max-width: 300px;
+    position: relative;
+    padding: 30px;
 }

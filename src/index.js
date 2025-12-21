@@ -1,13 +1,6 @@
 import "./css/style.css";
-import { RenderBoard } from "./js/goblin/renderBoard";
 import { Game } from "./js/goblin/game";
-import Icon from "./img/goblin.png";
+import goblinImg from "./img/goblin.png";
 
-const RenderCoblinBoard = new RenderBoard(document.body);
-const GameGoblin = new Game();
-
-RenderCoblinBoard.renderingBoard();
-RenderCoblinBoard.goblinMove(Icon);
-
+const GameGoblin = new Game(goblinImg);
 GameGoblin.startGame();
-GameGoblin.startMonitoring();

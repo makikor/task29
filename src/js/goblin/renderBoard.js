@@ -1,6 +1,7 @@
 export class RenderBoard {
   constructor(body) {
     this._body = body;
+    this.timer = null;
   }
 
   renderingBoard() {
@@ -24,18 +25,18 @@ export class RenderBoard {
         <div class="labelScoreGame__boxs_hit">0</div>
       </div>
       <div class="labelScoreGame__boxs" >
-        <div class="labelScoreGame__boxs_miss">0</box>
+        <div class="labelScoreGame__boxs_miss">0</div>
       </div>
-      `;
+    `;
 
     labelScoreGame.classList.add("labelScoreGame");
     this._body.append(labelScoreGame);
   }
 
-  goblinMove(Icon) {
+  goblinMove(iconPath) {
     const boxs = this._body.querySelectorAll(".box");
     const imageGoblin = new Image();
-    imageGoblin.src = Icon;
+    imageGoblin.src = iconPath;
     imageGoblin.classList.add("icon_goblin");
     imageGoblin.setAttribute("alt", "goblin");
 
@@ -45,7 +46,7 @@ export class RenderBoard {
 
     let previousIndex;
 
-    setInterval(() => {
+    this.timer = setInterval(() => {
       let randomIndex;
       do {
         randomIndex = random(0, boxs.length);
@@ -53,5 +54,28 @@ export class RenderBoard {
       boxs[randomIndex].append(imageGoblin);
       previousIndex = randomIndex;
     }, 1000);
+  }
+
+  finish(i) {
+    clearInterval(this.timer);
+    const img = document.querySelector("img");
+    if (img) {
+      img.remove();
+    }
+    let resultGame = document.createElement("div");
+    resultGame.classList.add("resutltGame");
+    resultGame.innerHTML = `
+      <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-window">
+          <div class="modal-header">
+            <h3>Игра окончена!</h3>
+          </div>
+        </div>
+      </div>
+    `;
+    this._body.append(resultGame);
+    resultGame.addEventListener("click", () => {
+      location.reload();
+    });
   }
 }
